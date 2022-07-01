@@ -1,0 +1,150 @@
+#include "DarkGDK.h"
+
+#include "Profiler.h"
+
+#include <windows.h>
+
+	
+using namespace std;
+	
+
+
+void DarkGDK( void )
+{ 
+	//-----This is the end of the include process------------------//
+	//------This is the start of the program-----------------------//
+
+	const int RADIUS = 50;
+
+	// Variables for the circle's XY coordinates.
+	// We initialize these with the cordinates of 
+	// the center of the screen.
+	int x = dbScreenWidth() / 2;
+	int y = dbScreenHeight() / 2;
+
+	
+
+
+	
+	dbSyncOn();      // Disable auto screen refresh
+	dbSyncRate(60);  // Set the maximum screen refresh rate
+
+	// The game loop
+	
+		while ( LoopGDK())
+		 {
+			 //-----This is just the profiler skip------------------//
+			 PROFILER_FRAME("DarkGDK( void )");
+             PROFILE
+		     PROFILER_CATEGORY( "dbUpKey", Profiler::Color::Aqua )
+		     PROFILER_CATEGORY( "dbDownKey", Profiler::Color::CadetBlue )
+			 PROFILER_CATEGORY( "dbLeftKey", Profiler::Color::DarkGray )
+		     PROFILER_CATEGORY( "dbRightKey", Profiler::Color::Magenta )
+			 //-----This is just the profiler end skip------------------//
+     
+
+		// Clear the screen.
+
+
+		dbCLS();
+
+		// Draw the circle at its current location.
+		dbCircle(x, y, RADIUS);
+
+
+
+__asm
+{
+ // ; //---------------------------------------------This is the part of the Optimization Attempt-----------------------------------------------------//
+
+//; 50   : 
+//; 51   : 		// If any arrow key is being pressed, then
+//; 52   : 		// move the circle acccordingly.
+//; 53   : 
+//; 54   : 		//---What I am attempting to optimize
+//; 55   : 
+//; 56   : 	if ( dbUpKey() )
+
+	call	dbUpKey				//; dbUpKey
+	test	eax, eax
+	mov	eax, y 
+	je	SHORT  loop1
+//; 57   : 	{
+//; 58   : 		y--;
+
+	
+	sub	eax, 1
+	mov	y, eax
+loop1:
+
+//; 59   : 	}
+//; 60   : 
+//; 61   : 	if ( dbDownKey() )
+
+	call	dbDownKey			//; dbDownKey
+	test	eax, eax
+	mov	eax, y
+	je	SHORT loop2
+    
+//; 62   : 	{
+//; 63   : 		y++;
+
+	
+	add	eax, 1
+	mov	y, eax
+loop2:
+
+//; 64   : 	}
+//; 65   : 
+//; 66   : 	if ( dbLeftKey() )
+
+	call	dbLeftKey			//; dbLeftKey
+	test	eax, eax
+	mov	eax, x
+	je	SHORT loop3
+    
+//; 67   : 	{
+//; 68   : 		x--;
+
+	
+	sub	eax, 1
+	mov	x, eax
+loop3:
+
+//; 69   : 	}
+//; 70   : 
+//; 71   : 	if (dbRightKey() )
+
+	call	dbRightKey			//; dbRightKey
+	test	eax, eax
+	mov	eax, x
+	je	SHORT loop4
+
+//; 72   : 	{
+//; 73   : 		x++;
+
+	
+	add	eax, 1
+	mov	x, eax
+loop4:
+
+//; 74   : 	}
+//; 75   :     //---What I am attempting to optimize 
+//; 76   : 
+
+//; //---------------------------------------------This is the part of the Optimization Attempt End-----------------------------------------------------//
+
+
+}
+	// Update the screen.
+	dbSync();
+
+	
+   }
+
+		//---Where the program has ended----//
+   
+}
+
+
+

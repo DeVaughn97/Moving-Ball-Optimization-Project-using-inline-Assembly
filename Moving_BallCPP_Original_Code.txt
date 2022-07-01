@@ -1,0 +1,104 @@
+#include "C:\Program Files (x86)\The Game Creators\Dark GDK\Include\DarkGDK.h"
+
+//#include "C:\Users\DeVaughn\Documents\Brofiler-1.0.2\Source\Profiler.h"
+
+#include "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Include\Windows.h"
+
+
+
+/*#include "C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include"
+#include "C:\Program Files (x86)\The Game Creators\Dark GDK\Lib\VS9\Dark_SDK"
+#include "C:\Users\DeVaughn\Documents\Visual Studio 2008\Projects\DarkGDK Revive Project Part 2\Dark GDK - 2D_MovingBall\Dark GDK - 2D_MovingBall\Release"
+#include "C:\Users\DeVaughn\Documents\Visual Studio 2008\Projects\DarkGDK Revive Project Part 2\Dark GDK - 2D_MovingBall\Dark GDK - 2D_MovingBall\Debug"
+#include "C:\Users\DeVaughn\Documents\Visual Studio 2008\Projects\Configuration Files"
+#include "C:\Users\DeVaughn\Documents\boost_1_78_0\boost_1_78_0\boost\parameter\aux_\preprocessor"
+#include "C:\Users\DeVaughn\Documents\boost_1_78_0\boost_1_78_0"
+#include "C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86"
+#include "C:\Program Files (x86)\The Game Creators\Dark GDK\Lib\VS9"
+#include "C:\Program Files (x86)\The Game Creators\Dark GDK\Include"*/
+	
+using namespace std;
+	
+
+
+void DarkGDK( void )
+{ 
+	//-----This is the end of the include process------------------//
+	//------This is the start of the program-----------------------//
+
+	const int RADIUS = 50;
+
+	// Variables for the circle's XY coordinates.
+	// We initialize these with the cordinates of 
+	// the center of the screen.
+	int x = dbScreenWidth() / 2;
+	int y = dbScreenHeight() / 2;
+
+	
+
+
+	
+	dbSyncOn();      // Disable auto screen refresh
+	dbSyncRate(60);  // Set the maximum screen refresh rate
+
+	// The game loop
+	
+		while ( LoopGDK())
+		 {
+			 //-----This is just the profiler skip------------------//
+			 /*PROFILER_FRAME("DarkGDK( void )");
+             PROFILE
+		     PROFILER_CATEGORY( "dbUpKey", Profiler::Color::Aqua )
+		     PROFILER_CATEGORY( "dbDownKey", Profiler::Color::CadetBlue )
+			 PROFILER_CATEGORY( "dbLeftKey", Profiler::Color::DarkGray )
+		     PROFILER_CATEGORY( "dbRightKey", Profiler::Color::Magenta )*/
+			 //-----This is just the profiler end skip------------------//
+     
+
+		// Clear the screen.
+
+
+		dbCLS();
+
+		// Draw the circle at its current location.
+		dbCircle(x, y, RADIUS);
+
+		// If any arrow key is being pressed, then
+		// move the circle acccordingly.
+
+		//---What I am attempting to optimize
+
+	if ( dbUpKey() )
+	{
+		y--;
+	}
+
+	if ( dbDownKey() )
+	{
+		y++;
+	}
+
+	if ( dbLeftKey() )
+	{
+		x--;
+	}
+
+	if (dbRightKey() )
+	{
+		x++;
+	}
+    //---What I am attempting to optimize 
+
+
+	// Update the screen.
+	dbSync();
+
+	
+		 }
+
+		//---Where the program has ended----//
+   
+}
+
+
+
